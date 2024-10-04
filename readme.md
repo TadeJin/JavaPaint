@@ -1,1 +1,1 @@
-MS paint in Java, school group project
+MS paint in Java, school group project.
