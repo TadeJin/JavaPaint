@@ -1,1 +1,1 @@
-PEPEHO vysněný tým se pokusí vyrobit MS paint v Javě (Jsme crackheadi)
+PEPEHO vysněný tým se pokusí vyrobit MS paint v Džavě (Jsme crackheadi)
