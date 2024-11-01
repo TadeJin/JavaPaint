@@ -15,8 +15,9 @@ public class App extends Application {
     public void start(Stage primaryStage) {
 
         try {
+           
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,700,500);
 
             primaryStage.setTitle("Hello World!");
             primaryStage.setScene(scene);
@@ -25,6 +26,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+
  public static void main(String[] args) {
         launch(args);
     }
