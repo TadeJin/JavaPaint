@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -19,8 +20,9 @@ public class App extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
             Scene scene = new Scene(root,700,500);
 
-            primaryStage.setTitle("Hello World!");
+            primaryStage.setTitle("JavaPaint");
             primaryStage.setScene(scene);
+            primaryStage.getIcons().add(new Image("file:icon.png"));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
