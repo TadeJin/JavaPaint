@@ -50,7 +50,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#saveImage" text="Save" />
                   <MenuItem mnemonicParsing="false" text="Load" />
           </items>
         </Menu>
@@ -61,10 +61,11 @@
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="About" />
-            <Menu mnemonicParsing="false" onShowing="#exitApp" text="Exit">
+            <Menu mnemonicParsing="false" text="Exit">
                <items>
                   <MenuItem mnemonicParsing="false" text="EXIT" />
-               </items></Menu>
+               </items>
+            </Menu>
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="500.0" minWidth="700.0" VBox.vgrow="ALWAYS">
@@ -78,9 +79,9 @@
                <value>
                   <Color />
                </value></ColorPicker>
-            <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" />
+            <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="42.0" />
             <Canvas fx:id="imageContainer" height="474.0" layoutX="-7.0" width="590.0" />
-            <Button layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" />
+            <Button layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="117.0" />
       </children>
     </AnchorPane>
   </children>
