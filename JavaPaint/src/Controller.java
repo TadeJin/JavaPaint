@@ -26,6 +26,11 @@ public class Controller {
 
     @FXML
     private ColorPicker colorPicker;
+
+    private double previousX;
+    private double previousY;
+
+    private boolean first = true;
     
 
     public void exitApp() {
@@ -53,32 +58,45 @@ public class Controller {
 
     public void startDrawing() {
         if (!isDrawing) {
+           
             isDrawing = true;
-            imageContainer.setOnMouseClicked(event -> {
-                double cordX = event.getX();
-                double cordY = event.getY();
-
-                GraphicsContext gc = imageContainer.getGraphicsContext2D();
-
-                gc.setFill(colorPicker.getValue());
-
-                gc.fillOval(cordX - 5, cordY - 5, 10, 10); 
-            });
-
-            imageContainer.setOnMouseDragged(event -> {
-                double cordX = event.getX();
-                double cordY = event.getY();
-
-                GraphicsContext gc = imageContainer.getGraphicsContext2D();
-
-                gc.setFill(colorPicker.getValue());
-
-                gc.fillOval(cordX - 5, cordY - 5, 10, 10); 
-            });
+            drawLine();
         } else {
-            imageContainer.setOnMouseClicked(null);
-            imageContainer.setOnMouseDragged(null);
+            imageContainer.setOnMouseClicked(null);  
+            imageContainer.setOnMouseDragged(null); 
+            imageContainer.setOnMouseDragReleased(null);
             isDrawing = false;
         }
+    }
+
+    private void drawLine() {
+        imageContainer.setOnMouseDragged(event -> {
+            if (first) {
+                previousX = event.getX();
+                previousY = event.getY();
+                first = false;
+            }
+            double cordX = event.getX();
+            double cordY = event.getY();
+    
+            GraphicsContext gc = imageContainer.getGraphicsContext2D();
+    
+            gc.setStroke(colorPicker.getValue());
+            gc.setLineWidth(2);
+    
+            gc.strokeLine(previousX, previousY, cordX, cordY);
+    
+            previousX = cordX;
+            previousY = cordY;
+        });
+
+        imageContainer.setOnMouseReleased(event ->  {
+            first = true;
+        });
+    }
+
+    public void clearCanvas() {
+        GraphicsContext gc = imageContainer.getGraphicsContext2D();
+        gc.clearRect(0, 0, imageContainer.getWidth(), imageContainer.getHeight());
     }
 }

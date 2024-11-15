@@ -61,9 +61,9 @@
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="About" />
-            <Menu mnemonicParsing="false" onShowing="#exitApp" text="Exit">
+            <Menu mnemonicParsing="false" onAction="#exitApp" onShowing="#exitApp" text="Exit">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Unspecified Action" visible="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#exitApp" text="Unspecified Action" visible="false" />
                </items></Menu>
       </menus>
     </MenuBar>
@@ -80,6 +80,7 @@
                </value></ColorPicker>
             <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" />
             <Canvas fx:id="imageContainer" height="474.0" layoutX="-1.0" width="590.0" />
+            <Button layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" />
       </children>
     </AnchorPane>
   </children>
