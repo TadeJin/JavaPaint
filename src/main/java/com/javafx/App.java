@@ -4,23 +4,42 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
+
     @Override
     public void start(Stage primaryStage) {
 
         try {
            
-            Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+            Parent root = loader.load();
+
             Scene scene = new Scene(root,700,500);
+
+            Controller controller = loader.getController();
 
             primaryStage.setTitle("JavaPaint");
             primaryStage.setScene(scene);
             //primaryStage.getIcons().add(new Image("file:icon.png"));
+
+            primaryStage.widthProperty().addListener((obs,oldWidth,newWidth) -> {
+                controller.resizeCanvasWidth(newWidth.doubleValue());
+            });
+
+            primaryStage.heightProperty().addListener((obs,oldHeight,newHeight) -> {
+                controller.resizeCanvasHeight(newHeight.doubleValue());
+            });;
+
+            primaryStage.setMinWidth(750);
+            primaryStage.setMinHeight(550);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

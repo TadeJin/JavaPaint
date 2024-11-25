@@ -12,7 +12,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -24,7 +26,13 @@ public class Controller {
     private boolean isDrawing = false;
 
     @FXML
+    private Line line;
+
+    @FXML
     private ColorPicker colorPicker;
+
+    @FXML
+    private VBox mainContainer;
 
     private double previousX;
     private double previousY;
@@ -138,5 +146,17 @@ public class Controller {
     public void clearCanvas() {
         GraphicsContext gc = imageContainer.getGraphicsContext2D();
         gc.clearRect(0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+    }
+
+    public void resizeCanvasWidth(Double windowWidth) {
+        imageContainer.setWidth(windowWidth - 125);
+        line.setStartX(windowWidth - 132.5);
+        line.setEndX(windowWidth - 132.5);
+    }
+
+    public void resizeCanvasHeight(Double windowHeight) {
+        imageContainer.setHeight(windowHeight-20);
+        line.setStartY(0);
+        line.setEndY(windowHeight);
     }
 }
