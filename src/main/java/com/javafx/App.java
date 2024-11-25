@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
@@ -39,6 +37,9 @@ public class App extends Application {
 
             primaryStage.setMinWidth(750);
             primaryStage.setMinHeight(550);
+
+            primaryStage.setMaxWidth(1920);
+            primaryStage.setMaxHeight(1080);
 
             primaryStage.show();
         } catch (IOException e) {

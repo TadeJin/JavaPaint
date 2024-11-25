@@ -1,10 +1,14 @@
 package com.javafx;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -107,6 +111,52 @@ public class Controller {
         } else {
             System.out.println("No file selected");
         }
+    }
+
+    public void invertColors() {
+        WritableImage writableImage = new WritableImage((int) imageContainer.getWidth(), (int) imageContainer.getHeight());
+        imageContainer.snapshot(null, writableImage);
+            // Get width and height from the WritableImage
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+
+        // Create a new BufferedImage with ARGB format
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Get PixelReader from the WritableImage
+        javafx.scene.image.PixelReader pixelReader = writableImage.getPixelReader();
+
+        // Loop through each pixel in the WritableImage and copy the data to the BufferedImage
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = pixelReader.getColor(x, y);
+
+                // Extract the RGBA components from the JavaFX Color object
+                int red = 255 - (int) (color.getRed() * 255);
+                int green = 255 - (int) (color.getGreen() * 255);
+                int blue = 255 - (int) (color.getBlue() * 255);
+                int alpha = (int) (color.getOpacity() * 255);
+
+                // Combine the components into one ARGB value and set it in the BufferedImage
+                int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+                bufferedImage.setRGB(x, y, argb);
+            }
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        Image backgroundImage = null;
+
+        try {
+            ImageIO.write(bufferedImage, "png", outputStream);
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            backgroundImage = new javafx.scene.image.Image(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GraphicsContext gc = imageContainer.getGraphicsContext2D();
+
+        gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
     }
 
     public void startDrawing() {
