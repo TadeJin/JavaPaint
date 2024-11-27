@@ -31,13 +31,15 @@ public class App extends Application {
 
             primaryStage.heightProperty().addListener((obs,oldHeight,newHeight) -> {
                 controller.resizeCanvasHeight(newHeight.doubleValue());
-            });;
+            });
 
             primaryStage.setMinWidth(750);
             primaryStage.setMinHeight(550);
 
             primaryStage.setMaxWidth(1920);
             primaryStage.setMaxHeight(1080);
+
+            controller.startUI();
 
             primaryStage.show();
         } catch (IOException e) {

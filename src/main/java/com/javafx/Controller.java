@@ -4,11 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import javafx.scene.control.TextField;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -41,8 +44,23 @@ public class Controller {
 
     private boolean first = true;
 
+    @FXML
+    private Line line1;
+
+    @FXML
+    private TextField canvasHeightInput;
+    
+    @FXML
+    private TextField canvasWidthInput;
+
+
     public void exitApp() {
         System.exit(0);
+    }
+
+    public void startUI() {
+        canvasHeightInput.setText(String.valueOf(imageContainer.getHeight()));
+        canvasWidthInput.setText(String.valueOf(imageContainer.getWidth()));
     }
 
     public void uploadFile() {
@@ -161,6 +179,9 @@ public class Controller {
         if (!isDrawing) {
            
             isDrawing = true;
+            
+            imageContainer.setCursor(Cursor.CROSSHAIR);
+
             imageContainer.setOnMouseDragged(event -> {
                 if (first) {
                     previousX = event.getX();
@@ -187,6 +208,7 @@ public class Controller {
         } else {
             imageContainer.setOnMouseDragged(null); 
             imageContainer.setOnMouseDragReleased(null);
+            imageContainer.setCursor(Cursor.DEFAULT);
             isDrawing = false;
         }
     }
@@ -200,11 +222,14 @@ public class Controller {
         imageContainer.setWidth(windowWidth - 125);
         line.setStartX(windowWidth - 132.5);
         line.setEndX(windowWidth - 132.5);
+        canvasWidthInput.setText(String.valueOf(windowWidth));
+        line1.setEndX(windowWidth - 140);
     }
 
     public void resizeCanvasHeight(Double windowHeight) {
         imageContainer.setHeight(windowHeight-20);
         line.setStartY(0);
         line.setEndY(windowHeight);
+        canvasHeightInput.setText(String.valueOf(windowHeight));
     }
 }
