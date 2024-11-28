@@ -44,23 +44,10 @@ public class Controller {
 
     private boolean first = true;
 
-    @FXML
-    private Line line1;
-
-    @FXML
-    private TextField canvasHeightInput;
-    
-    @FXML
-    private TextField canvasWidthInput;
 
 
     public void exitApp() {
         System.exit(0);
-    }
-
-    public void startUI() {
-        canvasHeightInput.setText(String.valueOf(imageContainer.getHeight()));
-        canvasWidthInput.setText(String.valueOf(imageContainer.getWidth()));
     }
 
     public void uploadFile() {
@@ -222,14 +209,11 @@ public class Controller {
         imageContainer.setWidth(windowWidth - 125);
         line.setStartX(windowWidth - 132.5);
         line.setEndX(windowWidth - 132.5);
-        canvasWidthInput.setText(String.valueOf(Math.floor(windowWidth)));
-        line1.setEndX(windowWidth - 140);
     }
 
     public void resizeCanvasHeight(Double windowHeight) {
         imageContainer.setHeight(windowHeight-20);
         line.setStartY(0);
         line.setEndY(windowHeight);
-        canvasHeightInput.setText(String.valueOf(Math.floor(windowHeight)));
     }
 }

@@ -39,8 +39,6 @@ public class App extends Application {
             primaryStage.setMaxWidth(1920);
             primaryStage.setMaxHeight(1080);
 
-            controller.startUI();
-
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
