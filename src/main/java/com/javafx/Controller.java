@@ -222,7 +222,7 @@ public class Controller {
         imageContainer.setWidth(windowWidth - 125);
         line.setStartX(windowWidth - 132.5);
         line.setEndX(windowWidth - 132.5);
-        canvasWidthInput.setText(String.valueOf(windowWidth));
+        canvasWidthInput.setText(String.valueOf(Math.floor(windowWidth)));
         line1.setEndX(windowWidth - 140);
     }
 
@@ -230,6 +230,6 @@ public class Controller {
         imageContainer.setHeight(windowHeight-20);
         line.setStartY(0);
         line.setEndY(windowHeight);
-        canvasHeightInput.setText(String.valueOf(windowHeight));
+        canvasHeightInput.setText(String.valueOf(Math.floor(windowHeight)));
     }
 }
