@@ -32,7 +32,6 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
@@ -46,7 +45,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainContainer" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.Controller">
+<VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -58,7 +57,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Filters">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#invertColors" text="Negative" />
+            <MenuItem mnemonicParsing="false" text="Negative" />
                   <MenuItem mnemonicParsing="false" text="Colorizer" />
           </items>
         </Menu>
@@ -76,27 +75,15 @@
                <font>
                   <Font size="11.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
             </Button>
             <ColorPicker fx:id="colorPicker" layoutX="593.0" layoutY="78.0" prefHeight="25.0" prefWidth="100.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="78.0">
                <value>
                   <Color />
-               </value>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ColorPicker>
-            <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="42.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ToggleButton>
-            <Canvas fx:id="imageContainer" height="476.0" layoutX="-7.0" layoutY="-2.0" width="591.0" />
-            <Button alignment="CENTER" layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="117.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Line fx:id="line" endX="584.5" startX="584.5" startY="475.0" stroke="#686767" />
+               </value></ColorPicker>
+            <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="42.0" />
+            <Canvas fx:id="imageContainer" height="474.0" layoutX="-7.0" width="590.0" />
+            <Button layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="117.0" />
+            <Line fx:id="line" endX="66.0" endY="460.0" fill="BLACK" layoutX="517.0" layoutY="14.0" startX="66.0" startY="-14.0" />
       </children>
     </AnchorPane>
   </children>

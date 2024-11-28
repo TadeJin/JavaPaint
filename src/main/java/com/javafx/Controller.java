@@ -205,13 +205,13 @@ public class Controller {
 
     public void resizeCanvasWidth(Double windowWidth) {
         imageContainer.setWidth(windowWidth - 125);
-        line.setStartX(windowWidth - 132.5);
-        line.setEndX(windowWidth - 132.5);
+        line.setStartX(windowWidth - 650);
+        line.setEndX(windowWidth - 650);
     }
 
     public void resizeCanvasHeight(Double windowHeight) {
         imageContainer.setHeight(windowHeight-20);
-        line.setStartY(0);
+        line.setStartY(-14);
         line.setEndY(windowHeight);
     }
 }
