@@ -4,14 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import javafx.scene.control.TextField;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -166,7 +164,7 @@ public class Controller {
         if (!isDrawing) {
            
             isDrawing = true;
-            
+
             imageContainer.setCursor(Cursor.CROSSHAIR);
 
             imageContainer.setOnMouseDragged(event -> {
