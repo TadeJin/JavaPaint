@@ -57,7 +57,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Filters">
           <items>
-            <MenuItem mnemonicParsing="false" text="Negative" />
+            <MenuItem mnemonicParsing="false" onAction="#invertColors" text="Negative" />
                   <MenuItem mnemonicParsing="false" text="Colorizer" />
           </items>
         </Menu>
