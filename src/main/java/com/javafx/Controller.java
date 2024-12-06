@@ -15,6 +15,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -43,8 +45,8 @@ public class Controller {
 
     private boolean first = true;
 
-    private BufferedImage previousCanvasContent;
 
+    private WritableImage previousCanvasContent;
 
     public void exitApp() {
         System.exit(0);
@@ -63,25 +65,7 @@ public class Controller {
 
             gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         }
-    }
-
-    private void uploadFile(BufferedImage bufferedImage) {
-        if (bufferedImage != null) {
-            GraphicsContext gc = imageContainer.getGraphicsContext2D();
-
-            Image backgroundImage = null;
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-            try {
-                ImageIO.write(bufferedImage, "png", outputStream);
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-                backgroundImage = new javafx.scene.image.Image(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
-        }
+        saveCanvas();
     }
 
      private Stage getStage() {
@@ -135,54 +119,32 @@ public class Controller {
         }
     }
 
-    public void saveImage(boolean tmpSave) {
-        if (this.previousCanvasContent.getWidth() < imageContainer.getWidth() || this.previousCanvasContent.getHeight() < imageContainer.getHeight()) {
-            WritableImage writableImage = new WritableImage((int) imageContainer.getWidth(), (int) imageContainer.getHeight());
-            imageContainer.snapshot(null, writableImage);
-            // Get width and height from the WritableImage
-            int width = (int) writableImage.getWidth();
-            int height = (int) writableImage.getHeight();
+    private void saveCanvas() {
+        WritableImage writableImage = new WritableImage(1920, 1080);
+        imageContainer.snapshot(null, writableImage);
+        previousCanvasContent = writableImage;
+    }
 
-            // Create a new BufferedImage with ARGB format
-            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    private void showHiddenCanvasContent() {
+        if (previousCanvasContent != null) {
 
-            // Get PixelReader from the WritableImage
-            javafx.scene.image.PixelReader pixelReader = writableImage.getPixelReader();
+            GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
-            // Loop through each pixel in the WritableImage and copy the data to the BufferedImage
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    Color color = pixelReader.getColor(x, y);
-
-                    // Extract the RGBA components from the JavaFX Color object
-                    int red = (int) (color.getRed() * 255);
-                    int green = (int) (color.getGreen() * 255);
-                    int blue = (int) (color.getBlue() * 255);
-                    int alpha = (int) (color.getOpacity() * 255);
-
-                    // Combine the components into one ARGB value and set it in the BufferedImage
-                    int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
-                    bufferedImage.setRGB(x, y, argb);
-                }
-            }
-        this.previousCanvasContent = bufferedImage;
+            gc.drawImage(previousCanvasContent, 0, 0, previousCanvasContent.getWidth(), previousCanvasContent.getHeight());
         }
     }
 
     public void invertColors() {
         WritableImage writableImage = new WritableImage((int) imageContainer.getWidth(), (int) imageContainer.getHeight());
         imageContainer.snapshot(null, writableImage);
-            // Get width and height from the WritableImage
+
         int width = (int) writableImage.getWidth();
         int height = (int) writableImage.getHeight();
 
-        // Create a new BufferedImage with ARGB format
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        // Get PixelReader from the WritableImage
         javafx.scene.image.PixelReader pixelReader = writableImage.getPixelReader();
 
-        // Loop through each pixel in the WritableImage and copy the data to the BufferedImage
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color color = pixelReader.getColor(x, y);
@@ -239,6 +201,7 @@ public class Controller {
         
                 previousX = cordX;
                 previousY = cordY;
+                saveCanvas();
             });
     
             imageContainer.setOnMouseReleased(event ->  {
@@ -255,6 +218,7 @@ public class Controller {
     public void clearCanvas() {
         GraphicsContext gc = imageContainer.getGraphicsContext2D();
         gc.clearRect(0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+        saveCanvas();
     }
 
     public void resizeCanvasWidth(Double windowWidth, Double oldWidth) {
@@ -262,12 +226,11 @@ public class Controller {
             imageContainer.setWidth(windowWidth - 125);
             line.setStartX(windowWidth - 650);
             line.setEndX(windowWidth - 650);
-            uploadFile(this.previousCanvasContent);
+            showHiddenCanvasContent();
         } else {
             imageContainer.setWidth(windowWidth - 125);
             line.setStartX(windowWidth - 650);
             line.setEndX(windowWidth - 650);
-            saveImage(true);
         }
     }
 
@@ -276,12 +239,11 @@ public class Controller {
             imageContainer.setHeight(windowHeight-20);
             line.setStartY(-14);
             line.setEndY(windowHeight);
-            uploadFile(this.previousCanvasContent);
+            showHiddenCanvasContent();
         } else {
             imageContainer.setHeight(windowHeight-20);
             line.setStartY(-14);
             line.setEndY(windowHeight);
-            saveImage(true);
         }
     }
 }
