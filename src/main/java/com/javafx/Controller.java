@@ -91,7 +91,7 @@ public class Controller {
     public void saveImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save image");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files","*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.png", "*.jpg", "*.jpeg"));
 
         File file = fileChooser.showSaveDialog(getStage());
         if (file != null) {
@@ -192,8 +192,7 @@ public class Controller {
                 int green = 255 - (int) (color.getGreen() * 255);
                 int blue = 255 - (int) (color.getBlue() * 255);
                 int alpha = (int) (color.getOpacity() * 255);
-
-                // Combine the components into one ARGB value and set it in the BufferedImage
+                
                 int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
                 bufferedImage.setRGB(x, y, argb);
             }
