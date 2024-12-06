@@ -26,11 +26,11 @@ public class App extends Application {
             primaryStage.setScene(scene);
 
             primaryStage.widthProperty().addListener((obs,oldWidth,newWidth) -> {
-                controller.resizeCanvasWidth(newWidth.doubleValue());
+                controller.resizeCanvasWidth(newWidth.doubleValue(),oldWidth.doubleValue());
             });
 
             primaryStage.heightProperty().addListener((obs,oldHeight,newHeight) -> {
-                controller.resizeCanvasHeight(newHeight.doubleValue());
+                controller.resizeCanvasHeight(newHeight.doubleValue(),oldHeight.doubleValue());
             });
 
             primaryStage.setMinWidth(750);

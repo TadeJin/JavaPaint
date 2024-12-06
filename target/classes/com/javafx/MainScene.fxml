@@ -45,7 +45,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.Controller">
+<VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -57,7 +57,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Filters">
           <items>
-            <MenuItem mnemonicParsing="false" text="Negative" />
+            <MenuItem mnemonicParsing="false" onAction="#invertColors" text="Negative" />
                   <MenuItem mnemonicParsing="false" text="Colorizer" />
           </items>
         </Menu>

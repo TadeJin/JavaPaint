@@ -1,0 +1,3 @@
+Krok zpět a dopředu (bonusově víc),
+vykreslování pixelů u resize (nebude to mizet když bude resize),
+náhodný obrázek (podle nějaké rovnice ideálně)
