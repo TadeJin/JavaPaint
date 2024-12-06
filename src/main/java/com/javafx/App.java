@@ -20,7 +20,21 @@ public class App extends Application {
 
             primaryStage.setTitle("JavaPaint");
             primaryStage.setScene(scene);
-            //primaryStage.getIcons().add(new Image("file:icon.png"));
+
+            primaryStage.widthProperty().addListener((obs,oldWidth,newWidth) -> {
+                controller.resizeCanvasWidth(newWidth.doubleValue(),oldWidth.doubleValue());
+            });
+
+            primaryStage.heightProperty().addListener((obs,oldHeight,newHeight) -> {
+                controller.resizeCanvasHeight(newHeight.doubleValue(),oldHeight.doubleValue());
+            });
+
+            primaryStage.setMinWidth(750);
+            primaryStage.setMinHeight(550);
+
+            primaryStage.setMaxWidth(1920);
+            primaryStage.setMaxHeight(1080);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
