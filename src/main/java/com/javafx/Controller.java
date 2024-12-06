@@ -1,5 +1,7 @@
 package com.javafx;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,12 +10,15 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -25,7 +30,13 @@ public class Controller {
     private boolean isDrawing = false;
 
     @FXML
+    private Line line;
+
+    @FXML
     private ColorPicker colorPicker;
+
+    @FXML
+    private VBox mainContainer;
 
     private double previousX;
     private double previousY;
@@ -80,7 +91,7 @@ public class Controller {
     public void saveImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save image");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files","*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.png", "*.jpg", "*.jpeg"));
 
         File file = fileChooser.showSaveDialog(getStage());
         if (file != null) {
@@ -181,8 +192,7 @@ public class Controller {
                 int green = 255 - (int) (color.getGreen() * 255);
                 int blue = 255 - (int) (color.getBlue() * 255);
                 int alpha = (int) (color.getOpacity() * 255);
-
-                // Combine the components into one ARGB value and set it in the BufferedImage
+                
                 int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
                 bufferedImage.setRGB(x, y, argb);
             }
@@ -208,6 +218,9 @@ public class Controller {
         if (!isDrawing) {
            
             isDrawing = true;
+
+            imageContainer.setCursor(Cursor.CROSSHAIR);
+
             imageContainer.setOnMouseDragged(event -> {
                 if (first) {
                     previousX = event.getX();
@@ -234,6 +247,7 @@ public class Controller {
         } else {
             imageContainer.setOnMouseDragged(null); 
             imageContainer.setOnMouseDragReleased(null);
+            imageContainer.setCursor(Cursor.DEFAULT);
             isDrawing = false;
         }
     }

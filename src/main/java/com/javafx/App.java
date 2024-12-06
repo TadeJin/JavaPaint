@@ -4,19 +4,23 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
+
     @Override
     public void start(Stage primaryStage) {
 
         try {
            
-            Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+            Parent root = loader.load();
+
             Scene scene = new Scene(root,700,500);
+
+            Controller controller = loader.getController();
 
             primaryStage.setTitle("JavaPaint");
             primaryStage.setScene(scene);

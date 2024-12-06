@@ -42,6 +42,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.Controller">
@@ -82,6 +83,7 @@
             <ToggleButton fx:id="imgUploadBut" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#startDrawing" prefHeight="26.0" prefWidth="100.0" text="Draw" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="42.0" />
             <Canvas fx:id="imageContainer" height="474.0" layoutX="-7.0" width="590.0" />
             <Button layoutX="593.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="100.0" text="Clear canvas" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="117.0" />
+            <Line fx:id="line" endX="66.0" endY="460.0" fill="BLACK" layoutX="517.0" layoutY="14.0" startX="66.0" startY="-14.0" />
       </children>
     </AnchorPane>
   </children>
