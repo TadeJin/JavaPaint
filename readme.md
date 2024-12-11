@@ -1,1 +1,1 @@
-PEPEHO vysněný tým se pokusí vyrobit MS paint v Džavě (Jsme crackheadi)
+Paint v Jave
