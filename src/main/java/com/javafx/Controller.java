@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -43,10 +45,26 @@ public class Controller {
     private boolean first = true;
 
 
-    private WritableImage previousCanvasContent;
+    private ArrayList<WritableImage> previousCanvasContent = new ArrayList<WritableImage>();
+
+    private int currentIndex = 0;
 
     public void exitApp() {
         System.exit(0);
+    }
+
+    public void setFirstIndex() {
+        WritableImage writableImage = new WritableImage(1920, 1080);
+
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+        for (int y = 0; y < 1080; y++) {
+            for (int x = 0; x < 1920; x++) {
+                pixelWriter.setColor(x, y, Color.WHITE);
+            }
+        }
+
+        previousCanvasContent.add(writableImage);
     }
 
     public void uploadFile() {
@@ -112,15 +130,32 @@ public class Controller {
     private void saveCanvas() {
         WritableImage writableImage = new WritableImage(1920, 1080);
         imageContainer.snapshot(null, writableImage);
-        previousCanvasContent = writableImage;
+        if (!previousCanvasContent.isEmpty()) {
+            if (previousCanvasContent.size() < 10) {
+                previousCanvasContent.add(writableImage);
+            } else {
+                previousCanvasContent.remove(0);
+                previousCanvasContent.add(writableImage);
+            }
+        } else {
+            previousCanvasContent.add(writableImage);
+        }
+
+        if (currentIndex < 10) {
+            currentIndex++;
+        }
+
+        for (int i = currentIndex + 1; i < previousCanvasContent.size(); i++) {
+            previousCanvasContent.remove(i);
+        }
     }
 
     private void showHiddenCanvasContent() {
-        if (previousCanvasContent != null) {
+        if (!previousCanvasContent.isEmpty()) {
 
             GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
-            gc.drawImage(previousCanvasContent, 0, 0, previousCanvasContent.getWidth(), previousCanvasContent.getHeight());
+            gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
     }
 
@@ -191,11 +226,11 @@ public class Controller {
         
                 previousX = cordX;
                 previousY = cordY;
-                saveCanvas();
             });
     
             imageContainer.setOnMouseReleased(event ->  {
                 first = true;
+                saveCanvas();
             });
         } else {
             imageContainer.setOnMouseDragged(null); 
@@ -234,6 +269,24 @@ public class Controller {
             imageContainer.setHeight(windowHeight-20);
             line.setStartY(-14);
             line.setEndY(windowHeight);
+        }
+    }
+
+    public void rollbackCanvas() {
+        if (currentIndex != 0) {
+            GraphicsContext gc = imageContainer.getGraphicsContext2D();
+
+            currentIndex--;
+            gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
+        }
+    }
+
+    public void fwdCanvas() {
+        if (currentIndex + 1 < previousCanvasContent.size()) {
+            GraphicsContext gc = imageContainer.getGraphicsContext2D();
+
+            currentIndex++;
+            gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
     }
 }

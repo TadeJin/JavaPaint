@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +34,22 @@ public class App extends Application {
 
             primaryStage.heightProperty().addListener((obs,oldHeight,newHeight) -> {
                 controller.resizeCanvasHeight(newHeight.doubleValue(),oldHeight.doubleValue());
+            });
+
+            controller.setFirstIndex();
+
+            KeyCombination ctrlZ = new KeyCodeCombination(javafx.scene.input.KeyCode.Z, KeyCombination.CONTROL_DOWN);
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (ctrlZ.match(event)) {
+                    controller.rollbackCanvas();
+                }
+            });
+
+            KeyCombination ctrlY = new KeyCodeCombination(javafx.scene.input.KeyCode.Y, KeyCombination.CONTROL_DOWN);
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (ctrlY.match(event)) {
+                    controller.fwdCanvas();
+                }
             });
 
             primaryStage.setMinWidth(750);
