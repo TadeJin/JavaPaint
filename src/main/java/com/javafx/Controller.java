@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -288,5 +289,44 @@ public class Controller {
             currentIndex++;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
+    }
+
+    public void generateImage() {
+            
+        int width = (int) imageContainer.getWidth();
+        int height = (int) imageContainer.getHeight();
+        Random random = new Random();
+
+        WritableImage image = new WritableImage(width, height);
+        PixelWriter writer = image.getPixelWriter();
+
+        double freqRed = random.nextDouble() * 0.05 + 0.01; // Frequency for red (0.01 to 0.06)
+        double freqGreen = random.nextDouble() * 0.05 + 0.01; // Frequency for green (0.01 to 0.06)
+        double freqBlue = random.nextDouble() * 0.05 + 0.01; // Frequency for blue (0.01 to 0.06)
+        double phaseRed = random.nextDouble() * Math.PI * 2; // Phase shift for red (0 to 2π)
+        double phaseGreen = random.nextDouble() * Math.PI * 2; // Phase shift for green (0 to 2π)
+        double phaseBlue = random.nextDouble() * Math.PI * 2; // Phase shift for blue (0 to 2π)
+
+        // Generate colors based on randomized equations
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double dx = x - width / 2.0;
+                double dy = y - height / 2.0;
+                double distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Use randomized parameters for color generation
+                double red = (Math.sin(distance * freqRed + phaseRed) + 1) * 128;
+                double green = (Math.sin(distance * freqGreen + phaseGreen) + 1) * 128;
+                double blue = (Math.cos(distance * freqBlue + phaseBlue) + 1) * 128;
+
+                Color color = Color.rgb((int) red, (int) green, (int) blue);
+                writer.setColor(x, y, color);
+            }
+        }
+
+        GraphicsContext gc = imageContainer.getGraphicsContext2D();
+
+        gc.drawImage(image, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+        saveCanvas();
     }
 }

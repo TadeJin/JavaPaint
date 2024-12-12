@@ -2,8 +2,10 @@ package com.javafx;
 
 import java.io.IOException;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -51,6 +53,14 @@ public class App extends Application {
                     controller.fwdCanvas();
                 }
             });
+
+            KeyCombination ctrlA = new KeyCodeCombination(javafx.scene.input.KeyCode.A);
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (ctrlA.match(event)) {
+                    controller.generateImage();;
+                }
+            });
+
 
             primaryStage.setMinWidth(750);
             primaryStage.setMinHeight(550);
