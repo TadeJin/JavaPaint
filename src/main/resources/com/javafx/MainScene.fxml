@@ -38,7 +38,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -104,12 +104,12 @@
                   <Font size="11.0" />
                </font>
             </Button>
-            <TextField fx:id="historyBox" layoutX="539.0" layoutY="144.0" prefHeight="257.0" prefWidth="100.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="160.0" />
             <Button layoutX="628.0" layoutY="392.0" mnemonicParsing="false" onAction="#generateImage" prefHeight="25.0" prefWidth="100.0" text="Generate Image" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="130.0">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
+            <TextArea fx:id="historyBox" layoutX="593.0" layoutY="145.0" prefHeight="282.0" prefWidth="100.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="160.0" />
       </children>
     </AnchorPane>
   </children>
