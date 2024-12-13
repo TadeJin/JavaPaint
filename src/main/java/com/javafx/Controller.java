@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.control.Button;
+
+import javafx.scene.control.TextField;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -45,6 +48,15 @@ public class Controller {
 
     private boolean first = true;
 
+    @FXML
+    private Button rollBackBut;
+
+    @FXML
+    private Button fwdBut;
+
+    @FXML
+    private TextField historyBox;
+
 
     private ArrayList<WritableImage> previousCanvasContent = new ArrayList<WritableImage>();
 
@@ -56,6 +68,7 @@ public class Controller {
 
     public void setFirstIndex() {
         WritableImage writableImage = new WritableImage(1920, 1080);
+        checkStepButValidity();
 
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
@@ -66,6 +79,8 @@ public class Controller {
         }
 
         previousCanvasContent.add(writableImage);
+        historyBox.setEditable(false);
+        historyBox.setFocusTraversable(false);
     }
 
     public void uploadFile() {
@@ -149,6 +164,7 @@ public class Controller {
         for (int i = currentIndex + 1; i < previousCanvasContent.size(); i++) {
             previousCanvasContent.remove(i);
         }
+        checkStepButValidity();
     }
 
     private void showHiddenCanvasContent() {
@@ -275,11 +291,13 @@ public class Controller {
 
     public void rollbackCanvas() {
         if (currentIndex != 0) {
+            rollBackBut.setDisable(false);
             GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
             currentIndex--;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
+        checkStepButValidity();
     }
 
     public void fwdCanvas() {
@@ -289,6 +307,7 @@ public class Controller {
             currentIndex++;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
+        checkStepButValidity();
     }
 
     public void generateImage() {
@@ -328,5 +347,19 @@ public class Controller {
 
         gc.drawImage(image, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         saveCanvas();
+    }
+
+    public void checkStepButValidity() {
+        if (currentIndex == 0) {
+            rollBackBut.setDisable(true);
+        } else {
+            rollBackBut.setDisable(false);
+        }
+
+        if (currentIndex + 1 == previousCanvasContent.size() || previousCanvasContent.isEmpty()) {
+            fwdBut.setDisable(true);
+        } else {
+            fwdBut.setDisable(false);
+        }
     }
 }
