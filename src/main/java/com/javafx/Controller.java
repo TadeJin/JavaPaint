@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Button;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -300,12 +301,12 @@ public class Controller {
         WritableImage image = new WritableImage(width, height);
         PixelWriter writer = image.getPixelWriter();
 
-        double freqRed = random.nextDouble() * 0.05 + 0.01; // Frequency for red (0.01 to 0.06)
-        double freqGreen = random.nextDouble() * 0.05 + 0.01; // Frequency for green (0.01 to 0.06)
-        double freqBlue = random.nextDouble() * 0.05 + 0.01; // Frequency for blue (0.01 to 0.06)
-        double phaseRed = random.nextDouble() * Math.PI * 2; // Phase shift for red (0 to 2π)
-        double phaseGreen = random.nextDouble() * Math.PI * 2; // Phase shift for green (0 to 2π)
-        double phaseBlue = random.nextDouble() * Math.PI * 2; // Phase shift for blue (0 to 2π)
+        double freqRed = random.nextDouble() * 0.05 + 0.01; 
+        double freqGreen = random.nextDouble() * 0.05 + 0.01;
+        double freqBlue = random.nextDouble() * 0.05 + 0.01; 
+        double phaseRed = random.nextDouble() * Math.PI * 2;
+        double phaseGreen = random.nextDouble() * Math.PI * 2; 
+        double phaseBlue = random.nextDouble() * Math.PI * 2;
 
         // Generate colors based on randomized equations
         for (int y = 0; y < height; y++) {
