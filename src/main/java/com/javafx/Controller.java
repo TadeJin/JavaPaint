@@ -93,6 +93,7 @@ public class Controller {
     private void addHistoryText(String text) {
         historyText += "\n--------------   \n" + text;
         historyBox.setText(historyText);
+        historyBox.appendText("");
     }
 
     public void uploadFile() {
@@ -374,14 +375,14 @@ public class Controller {
     }
 
     public void checkStepButValidity() {
-        System.out.println(currentIndex);
+        System.out.println("SIZE:" + previousCanvasContent.size());
         if (currentIndex == 0) {
             rollBackBut.setDisable(true);
         } else {
             rollBackBut.setDisable(false);
         }
 
-        if (currentIndex + 1 > previousCanvasContent.size() || previousCanvasContent.isEmpty()) {
+        if (currentIndex + 1 >= previousCanvasContent.size() || previousCanvasContent.isEmpty()) {
             fwdBut.setDisable(true);
         } else {
             fwdBut.setDisable(false);

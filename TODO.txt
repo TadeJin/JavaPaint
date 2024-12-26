@@ -2,4 +2,5 @@ Krok zpět a dopředu (bonusově víc), -- HOTOVO
 vykreslování pixelů u resize (nebude to mizet když bude resize), -- HOTOVO
 náhodný obrázek (podle nějaké rovnice ideálně), --HOTOVO
 zoom (možná),
-action history window
+action history window --HOTOVO--,
+About pop-up
