@@ -6,7 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.Button;
+import javafx.scene.control.Button;
+
+
+
+import javafx.scene.control.TextArea;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -46,6 +50,17 @@ public class Controller {
 
     private boolean first = true;
 
+    @FXML
+    private Button rollBackBut;
+
+    @FXML
+    private Button fwdBut;
+
+    @FXML
+    private TextArea historyBox;
+
+    private String historyText;
+
 
     private ArrayList<WritableImage> previousCanvasContent = new ArrayList<WritableImage>();
 
@@ -57,6 +72,7 @@ public class Controller {
 
     public void setFirstIndex() {
         WritableImage writableImage = new WritableImage(1920, 1080);
+        checkStepButValidity();
 
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
@@ -67,6 +83,16 @@ public class Controller {
         }
 
         previousCanvasContent.add(writableImage);
+        historyBox.setEditable(false);
+        historyBox.setFocusTraversable(false);
+        historyText = "App started successfully.";
+        historyBox.setText(historyText);
+        historyBox.setWrapText(true);
+    }
+
+    private void addHistoryText(String text) {
+        historyText += "\n--------------   \n" + text;
+        historyBox.setText(historyText);
     }
 
     public void uploadFile() {
@@ -83,6 +109,7 @@ public class Controller {
             gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         }
         saveCanvas();
+        addHistoryText("Image uploaded.");
     }
 
      private Stage getStage() {
@@ -121,12 +148,14 @@ public class Controller {
                 }
 
                 ImageIO.write(bufferedImage, "PNG", file);
+                addHistoryText("Image saved.");
             } catch (IOException e) {
                 System.err.println("Failed to save canvas");
             }
         } else {
             System.out.println("No file selected");
         }
+        
     }
 
     private void saveCanvas() {
@@ -150,6 +179,7 @@ public class Controller {
         for (int i = currentIndex + 1; i < previousCanvasContent.size(); i++) {
             previousCanvasContent.remove(i);
         }
+        checkStepButValidity();
     }
 
     private void showHiddenCanvasContent() {
@@ -201,12 +231,14 @@ public class Controller {
         GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
         gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+        addHistoryText("Invert filter applied.");
     }
 
     public void startDrawing() {
         if (!isDrawing) {
            
             isDrawing = true;
+            addHistoryText("Started drawing.");
 
             imageContainer.setCursor(Cursor.CROSSHAIR);
 
@@ -239,6 +271,7 @@ public class Controller {
             imageContainer.setOnMouseDragReleased(null);
             imageContainer.setCursor(Cursor.DEFAULT);
             isDrawing = false;
+            addHistoryText("Stopped drawing.");
         }
     }
 
@@ -246,6 +279,7 @@ public class Controller {
         GraphicsContext gc = imageContainer.getGraphicsContext2D();
         gc.clearRect(0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         saveCanvas();
+        addHistoryText("Canvas cleared.");
     }
 
     public void resizeCanvasWidth(Double windowWidth, Double oldWidth) {
@@ -263,12 +297,14 @@ public class Controller {
 
     public void resizeCanvasHeight(Double windowHeight, Double oldHeight) {
         if (windowHeight > oldHeight) {
-            imageContainer.setHeight(windowHeight-20);
+            imageContainer.setHeight(windowHeight - 20);
+            historyBox.setPrefHeight(windowHeight - 260);
             line.setStartY(-14);
             line.setEndY(windowHeight);
             showHiddenCanvasContent();
         } else {
-            imageContainer.setHeight(windowHeight-20);
+            imageContainer.setHeight(windowHeight - 20);
+            historyBox.setPrefHeight(windowHeight - 260);
             line.setStartY(-14);
             line.setEndY(windowHeight);
         }
@@ -276,11 +312,14 @@ public class Controller {
 
     public void rollbackCanvas() {
         if (currentIndex != 0) {
+            rollBackBut.setDisable(false);
             GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
             currentIndex--;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
+        checkStepButValidity();
+        addHistoryText("Undo.");
     }
 
     public void fwdCanvas() {
@@ -290,6 +329,8 @@ public class Controller {
             currentIndex++;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
         }
+        checkStepButValidity();
+        addHistoryText("Reverted.");
     }
 
     public void generateImage() {
@@ -329,5 +370,21 @@ public class Controller {
 
         gc.drawImage(image, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         saveCanvas();
+        addHistoryText("Random image generated.");
+    }
+
+    public void checkStepButValidity() {
+        System.out.println(currentIndex);
+        if (currentIndex == 0) {
+            rollBackBut.setDisable(true);
+        } else {
+            rollBackBut.setDisable(false);
+        }
+
+        if (currentIndex + 1 > previousCanvasContent.size() || previousCanvasContent.isEmpty()) {
+            fwdBut.setDisable(true);
+        } else {
+            fwdBut.setDisable(false);
+        }
     }
 }
