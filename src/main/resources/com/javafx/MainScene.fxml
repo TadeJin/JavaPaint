@@ -61,13 +61,13 @@
             <MenuItem mnemonicParsing="false" onAction="#invertColors" text="Negative" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false">
+        <Menu fx:id="aboutMenu" mnemonicParsing="false" style="-fx-background-color: transparent;">
                <graphic>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAbout" prefHeight="19.0" prefWidth="44.0" style="-fx-border-color: transparent; -fx-background-color: transparent; -fx-padding: 0;" text="About" />
+                  <Button fx:id="aboutButton" mnemonicParsing="false" onAction="#showAbout" onMouseEntered="#highlightAboutMenu" onMouseExited="#removeHighlightFromAboutMenu" style="-fx-background-color: transparent; -fx-padding: -2;" text="About" />
                </graphic></Menu>
-            <Menu mnemonicParsing="false">
+            <Menu fx:id="exitMenu" mnemonicParsing="false" style="-fx-background-color: transparent;">
                <graphic>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#exitApp" style="-fx-border-color: transparent; -fx-background-color: transparent; -fx-padding: 0;" text="Exit" />
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" onMouseEntered="#highlightExitMenu" onMouseExited="#removeHighlightFromExitMenu" style="-fx-background-color: transparent; -fx-padding: -2;" text="Exit" />
                </graphic>
             </Menu>
       </menus>

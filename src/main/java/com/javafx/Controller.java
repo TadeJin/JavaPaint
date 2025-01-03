@@ -33,6 +33,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Menu;
 
 public class Controller {
 
@@ -66,6 +67,17 @@ public class Controller {
 
     private String historyText;
 
+    @FXML
+    private Menu aboutMenu;
+
+    @FXML
+    private Button aboutButton;
+
+    @FXML
+    private Menu exitMenu;
+
+    @FXML
+    private Button exitButton;
 
 
     private ArrayList<WritableImage> previousCanvasContent = new ArrayList<WritableImage>();
@@ -94,6 +106,26 @@ public class Controller {
         historyText = "App started successfully.";
         historyBox.setText(historyText);
         historyBox.setWrapText(true);
+    }
+
+    public void highlightAboutMenu() {
+        aboutMenu.setStyle("-fx-background-color: rgb(0,150,201);");
+        aboutButton.setStyle("-fx-text-fill: white;-fx-background-color: transparent;-fx-padding: -2;");
+    }
+
+    public void removeHighlightFromAboutMenu() {
+        aboutMenu.setStyle("-fx-background-color: transparent;");
+        aboutButton.setStyle("-fx-text-fill: black;-fx-background-color: transparent;-fx-padding: -2;");
+    }
+
+    public void highlightExitMenu() {
+        exitMenu.setStyle("-fx-background-color: rgb(0,150,201);");
+        exitButton.setStyle("-fx-text-fill: white;-fx-background-color: transparent;-fx-padding: -2;");
+    }
+
+    public void removeHighlightFromExitMenu() {
+        exitMenu.setStyle("-fx-background-color: transparent;");
+        exitButton.setStyle("-fx-text-fill: black;-fx-background-color: transparent;-fx-padding: -2;");
     }
 
     private void addHistoryText(String text) {
@@ -238,6 +270,7 @@ public class Controller {
         GraphicsContext gc = imageContainer.getGraphicsContext2D();
 
         gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+        saveCanvas();
         addHistoryText("Invert filter applied.");
     }
 
@@ -324,9 +357,9 @@ public class Controller {
 
             currentIndex--;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
+            addHistoryText("Undo.");
         }
         checkStepButValidity();
-        addHistoryText("Undo.");
     }
 
     public void fwdCanvas() {
@@ -335,9 +368,9 @@ public class Controller {
 
             currentIndex++;
             gc.drawImage(previousCanvasContent.get(currentIndex), 0, 0, previousCanvasContent.get(currentIndex).getWidth(), previousCanvasContent.get(currentIndex).getHeight());
+            addHistoryText("Reverted.");
         }
         checkStepButValidity();
-        addHistoryText("Reverted.");
     }
 
     public void generateImage() {
@@ -396,7 +429,6 @@ public class Controller {
 
     public void showAbout() {
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PopUp.fxml"));
             Parent popupContent = loader.load();
 
@@ -406,13 +438,16 @@ public class Controller {
                 textArea.setFocusTraversable(false);
             }
 
-            // Create the popup stage
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("About");
 
+            popupStage.setResizable(false);
+
             Button closeBut = (Button) popupContent.lookup("#closeButton");
-            closeBut.setOnAction(e -> popupStage.close());
+            closeBut.setOnAction(e -> {
+                popupStage.close();
+            });
 
             Scene popupScene = new Scene(popupContent);
             popupStage.setScene(popupScene);
