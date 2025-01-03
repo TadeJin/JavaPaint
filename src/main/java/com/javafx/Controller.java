@@ -16,7 +16,10 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -26,7 +29,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -60,6 +65,7 @@ public class Controller {
     private TextArea historyBox;
 
     private String historyText;
+
 
 
     private ArrayList<WritableImage> previousCanvasContent = new ArrayList<WritableImage>();
@@ -375,7 +381,6 @@ public class Controller {
     }
 
     public void checkStepButValidity() {
-        System.out.println("SIZE:" + previousCanvasContent.size());
         if (currentIndex == 0) {
             rollBackBut.setDisable(true);
         } else {
@@ -386,6 +391,34 @@ public class Controller {
             fwdBut.setDisable(true);
         } else {
             fwdBut.setDisable(false);
+        }
+    }
+
+    public void showAbout() {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PopUp.fxml"));
+            Parent popupContent = loader.load();
+
+            TextArea textArea = (TextArea) popupContent.lookup("#popUpTxtArea");
+            if (textArea != null) {
+                textArea.setEditable(false);
+                textArea.setFocusTraversable(false);
+            }
+
+            // Create the popup stage
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("About");
+
+            Button closeBut = (Button) popupContent.lookup("#closeButton");
+            closeBut.setOnAction(e -> popupStage.close());
+
+            Scene popupScene = new Scene(popupContent);
+            popupStage.setScene(popupScene);
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

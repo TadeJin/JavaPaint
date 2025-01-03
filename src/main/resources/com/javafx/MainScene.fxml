@@ -63,7 +63,7 @@
         </Menu>
         <Menu mnemonicParsing="false">
                <graphic>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="19.0" prefWidth="44.0" style="-fx-border-color: transparent; -fx-background-color: transparent; -fx-padding: 0;" text="About" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAbout" prefHeight="19.0" prefWidth="44.0" style="-fx-border-color: transparent; -fx-background-color: transparent; -fx-padding: 0;" text="About" />
                </graphic></Menu>
             <Menu mnemonicParsing="false">
                <graphic>
