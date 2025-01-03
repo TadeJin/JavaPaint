@@ -137,7 +137,7 @@ public class Controller {
     public void uploadFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg" , "*.bmp")
         );
 
         File file = fileChooser.showOpenDialog(getStage());
@@ -158,7 +158,7 @@ public class Controller {
     public void saveImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save image");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.png", "*.jpg", "*.jpeg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files","*.png", "*.jpg", "*.jpeg", "*.bmp"));
 
         File file = fileChooser.showSaveDialog(getStage());
         if (file != null) {
