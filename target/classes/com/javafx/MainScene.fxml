@@ -59,6 +59,7 @@
         <Menu mnemonicParsing="false" text="Filters">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#invertColors" text="Negative" />
+                  <MenuItem mnemonicParsing="false" onAction="#blackWhite" text="Back and White " />
           </items>
         </Menu>
         <Menu fx:id="aboutMenu" mnemonicParsing="false" style="-fx-background-color: transparent;">

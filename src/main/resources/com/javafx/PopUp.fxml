@@ -41,7 +41,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <TextArea fx:id="popUpTxtArea" layoutX="2.0" layoutY="-5.0" prefHeight="170.0" prefWidth="321.0" text="&#9;&#9;&#9;&#9;&#9;   JAVAPAINT&#10;&#10;&#9;&#9;&#9;&#9;&#10;&#10;        Creators: Tadeáš Jindra, Adam Kapsa, Marek Čermák&#10;&#10;&#10;&#10;Version: 1.0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea fx:id="popUpTxtArea" layoutX="2.0" layoutY="-5.0" prefHeight="170.0" prefWidth="321.0" text="&#9;&#9;&#9;&#9;&#9;   JAVAPAINT&#10;&#10;&#9;&#9;&#9;&#9;&#10;&#10;        Creators: Tadeáš Jindra, Adam Kapsa, Marek Čermák&#10;&#9;&#9;Github: https://github.com/TadeJin/JavaPaint&#10;&#10;&#10;Version: 1.0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Button fx:id="closeButton" layoutX="502.0" layoutY="286.0" mnemonicParsing="false" text="OK" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       </children>
     </AnchorPane>

@@ -184,7 +184,7 @@ public class Controller {
                         bufferedImage.setRGB(x, y, argb);
                     }
                 }
-
+                
                 ImageIO.write(bufferedImage, "PNG", file);
                 addHistoryText("Image saved.");
             } catch (IOException e) {
@@ -240,17 +240,61 @@ public class Controller {
 
         javafx.scene.image.PixelReader pixelReader = writableImage.getPixelReader();
 
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color color = pixelReader.getColor(x, y);
 
-                // Extract the RGBA components from the JavaFX Color object
+              
                 int red = 255 - (int) (color.getRed() * 255);
                 int green = 255 - (int) (color.getGreen() * 255);
                 int blue = 255 - (int) (color.getBlue() * 255);
+
                 int alpha = (int) (color.getOpacity() * 255);
                 
                 int argb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+                bufferedImage.setRGB(x, y, argb);
+            }
+        }
+
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        Image backgroundImage = null;
+
+        try {
+            ImageIO.write(bufferedImage, "png", outputStream);
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            backgroundImage = new javafx.scene.image.Image(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GraphicsContext gc = imageContainer.getGraphicsContext2D();
+
+        gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
+        saveCanvas();
+        addHistoryText("Invert filter applied.");
+    }
+
+    public void blackWhite() {
+        WritableImage writableImage = new WritableImage((int) imageContainer.getWidth(), (int) imageContainer.getHeight());
+        imageContainer.snapshot(null, writableImage);
+
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        javafx.scene.image.PixelReader pixelReader = writableImage.getPixelReader();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = pixelReader.getColor(x, y);
+
+                int avg = (int) ((color.getRed() * 255 + color.getGreen() * 255 + color.getBlue() * 255) / 3);
+                int alpha = (int) (color.getOpacity() * 255);
+
+                int argb = (alpha << 24) | (avg << 16) | (avg << 8) | avg;
                 bufferedImage.setRGB(x, y, argb);
             }
         }
@@ -270,7 +314,7 @@ public class Controller {
 
         gc.drawImage(backgroundImage, 0, 0, imageContainer.getWidth(), imageContainer.getHeight());
         saveCanvas();
-        addHistoryText("Invert filter applied.");
+        addHistoryText("B&W filter applied.");
     }
 
     public void startDrawing() {
@@ -388,14 +432,13 @@ public class Controller {
         double phaseGreen = random.nextDouble() * Math.PI * 2; 
         double phaseBlue = random.nextDouble() * Math.PI * 2;
 
-        // Generate colors based on randomized equations
+      
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double dx = x - width / 2.0;
                 double dy = y - height / 2.0;
                 double distance = Math.sqrt(dx * dx + dy * dy);
 
-                // Use randomized parameters for color generation
                 double red = (Math.sin(distance * freqRed + phaseRed) + 1) * 128;
                 double green = (Math.sin(distance * freqGreen + phaseGreen) + 1) * 128;
                 double blue = (Math.cos(distance * freqBlue + phaseBlue) + 1) * 128;
