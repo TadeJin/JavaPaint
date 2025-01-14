@@ -51,7 +51,15 @@ public class App extends Application {
                     controller.fwdCanvas();
                 }
             });
-            
+
+            KeyCombination ctrlS = new KeyCodeCombination(javafx.scene.input.KeyCode.S, KeyCombination.CONTROL_DOWN);
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (ctrlS.match(event)) {
+                    controller.saveImage();
+                }
+            });
+
+
             primaryStage.setMinWidth(750);
             primaryStage.setMinHeight(550);
 
