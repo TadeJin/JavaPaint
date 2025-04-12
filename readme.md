@@ -8,5 +8,5 @@
 -  Step back and step forward actions
 -  Saving created images
 
-Created on java 21.0.4 2024-07-16 LTS, packaged using Maven.
+Created on Java 21.0.4 2024-07-16 LTS with JavaFX 21.0.4, packaged using Maven.
 
